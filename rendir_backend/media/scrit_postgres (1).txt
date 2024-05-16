@@ -1,0 +1,770 @@
+
+sudo sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo apt-get update
+sudo apt-get -y install postgresql
+
+psql -d postgres -U postgres
+sudo psql -d postgres -U postgres
+sudo psql -h 127.0.0.1 -U postgres -p 5432 -d postgres
+
+psql -h 127.0.0.1 -U postgres -p 5432 -d postgres
+psql -h 192.168.1.82 -U postgres -p 5432 -d postgres !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+psql -h 127.0.0.1 -U postgres -p 5432 -d postgres
+psql -h 127.0.0.1 -U postgres
+sudo systemctl status postgresql@15-main
+
+desinstalar postgres
+dpkg -l | grep postgres
+sudo apt-get --purge remove postgresql-x.x postgresql-client-x.x postgresql-client-common postgresql-common postgresql-contrib postgresql-contrib-x.x
+
+INSTALAR pgadmin:
+#
+# Setup the repository
+# Install the public key for the repository (if not done previously):
+curl -fsS https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /usr/share/keyrings/packages-pgadmin-org.gpg
+
+# Create the repository configuration file:
+sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
+#
+# Install pgAdmin
+#
+# Install for both desktop and web modes:
+sudo apt install pgadmin4
+# Install for desktop mode only:
+sudo apt install pgadmin4-desktop
+# Install for web mode only: 
+sudo apt install pgadmin4-web 
+# Configure the webserver, if you installed pgadmin4-web:
+sudo /usr/pgadmin4/bin/setup-web.sh
+###############################################################
+
+COMANDOS:
+ALTER USER postgres WITH PASSWORD 'postgres';
+SELECT * FROM DEMODB;
+SELECT * FROM tabla ORDER BY c1 DESC;
+INSERT INTO tabla (campo1, campo2) VALUES (1,2);
+INSERT INTO demo (NAME, HINT) VALUES ('Gonzalo', 'Pista 1');
+select * from demo order by id desc;
+UPDATE demo SET hint='nuevodato' WHERE id=1;
+DELETE FROM tabla WHERE columna='condicion';
+CREATE TABLE alumno(
+    nombre varchar,
+    nota1 integer,
+    nota2 integer,
+    nota3 integer,
+)
+DROP TABLE alumnos;
+ALTER TABLE alumno drop columna3;
+SELECT COUNT (*) FROM monedas;
+SELECT COUNT (*) FROM monedas WHERE nombre='peso' OR nombre='guarani'
+SELECT DISTINCT nombre FROM monedas;
+SELECT COUNT(DISTINCT nombre) FROM monedas;
+SELECT nombre, count(nombre) FROM monedas GROUP BY nombre;
+SELECT nombre, count(nombre) FROM monedas GROUP BY nombre order by 2 desc;
+SELECT nombre, count(nombre) as total FROM monedas GROUP BY nombre ORDER BY 2 desc;
+SELECT categoria, SUM(monto) FROM ventas GROUP BY categoria;
+SELECT categoria, AVG(monto) FROM ventas GROUP BY categoria;
+SELECT categoria, AVG(monto) FROM ventas GROUP BY categoria ORDER BY categoria DESC;
+SELECT categoria, AVG(monto) FROM ventas GROUP BY categoria HAVING AVG(monto)>600 ORDER BY categoria DESC;
+SELECT * FROM ventas WHERE mont > (SELECT AVG(monto) FROM ventas);
+
+################################################################
+desafio:
+
+CREATE DATABASE desafio_Alberto_Guerrero_806;
+
+CREATE TABLE clientes(
+    email varchar(50),
+	nombre varchar,
+    telefono varchar(16),
+	empresa varchar(50),
+    prioridad smallint
+);
+
+SELECT * FROM clientes;
+
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail1@mail.com', 'alberto', '23232345','incotel',10);
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail2@mail.com', 'jose', '23232345','sodexo',9);
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail3@mail.com', 'tomas', '23232345','todopan',8);
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail4@mail.com', 'ruben', '23232345','elcielo',7);
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail5@mail.com', 'maite', '23232345','dogi',10);
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail6@mail.com', 'carlos', '23232345','carlitos',9);
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail7@mail.com', 'raquel', '23232345','incoludidos',4);
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail8@mail.com', 'andrea', '23232345','saborlatino',3);
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail9@mail.com', 'eriberto', '23232345','lippi',5);
+INSERT INTO clientes (email,nombre,telefono,empresa,prioridad) VALUES ('mail10@mail.com', 'samuel', '23232345','hadad',1);
+
+SELECT * FROM clientes ORDER BY prioridad DESC LIMIT 3;
+SELECT * FROM clientes WHERE prioridad > 5 ORDER BY prioridad;
+
+DELETE FROM clientes WHERE prioridad='10';
+ALTER TABLE usuarios ALTER COLUMN edad TYPE INTEGER USING (edad::integer);
+ALTER TABLE usuarios ADD PRIMARY KEY(id);
+
+#################################################################
+DESAFIO
+
+CREATE TABLE INSCRITOS(cantidad INT, fecha DATE, fuente VARCHAR);
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 44, '01/01/2021', 'Blog' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 56, '01/01/2021', 'Página' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 39, '01/02/2021', 'Blog' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 81, '01/02/2021', 'Página' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 12, '01/03/2021', 'Blog' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 91, '01/03/2021', 'Página' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 48, '01/04/2021', 'Blog' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 45, '01/04/2021', 'Página' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 55, '01/05/2021', 'Blog' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 33, '01/05/2021', 'Página' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 18, '01/06/2021', 'Blog' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 12, '01/06/2021', 'Página' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 34, '01/07/2021', 'Blog' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 24, '01/07/2021', 'Página' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 83, '01/08/2021', 'Blog' );
+INSERT INTO INSCRITOS(cantidad, fecha, fuente) VALUES ( 99, '01/08/2021', 'Página' );
+
+1.- SELECT COUNT(*) FROM inscritos;
+2.- SELECT SUM(*) FROM inscritos;
+3.- SELECT * FROM inscritos WHERE fecha = (SELECT MIN(fecha) FROM inscritos);
+4.- SELECT fecha, SUM(cantidad) FROM inscritos GROUP BY fecha ORDER BY fecha;
+5.- SELECT fuente, SUM(cantidad) FROM inscritos GROUP BY fuente ORDER BY fuente;
+
+7.- SELECT fecha, cantidad FROM inscritos WHERE fuente='Blog' ORDER BY cantidad DESC LIMIT 1;
+8.- SELECT fecha, AVG(cantidad) FROM inscritos GROUP BY fecha ORDER BY fecha;
+
+####################################################################
+
+select * from post, comments WHERE post.id = comments.post_id;
+JOINS
+select post.id, posts.title, commntes.content from post, comments where post.id = commnets.post_id;
+select usuarios.*, posts.title, commntes.content from post, comments where post.id = commnets.post_id;
+
+select post.*, comments.* FROM post INNER JOIN comments (post.id = comments.post_id)
+
+###############################################################################################################3
+################################################################################################################3
+desafio multi
+
+CREATE TABLE usuarios(
+id SERIAL,
+email VARCHAR(150),
+nombre VARCHAR(100),
+apellido VARCHAR(100),
+rol VARCHAR
+);
+
+INSERT INTO usuarios(email, nombre, apellido, rol) VALUES ('nombre1@mail.com', 'nombre1', 'apellido1', 'administrador');
+INSERT INTO usuarios(email, nombre, apellido, rol) VALUES ('nombre2@mail.com', 'nombre2', 'apellido2', 'usuario');
+INSERT INTO usuarios(email, nombre, apellido, rol) VALUES ('nombre3@mail.com', 'nombre3', 'apellido3', 'usuario');
+INSERT INTO usuarios(email, nombre, apellido, rol) VALUES ('nombre4@mail.com', 'nombre4', 'apellido4', 'usuario');
+INSERT INTO usuarios(email, nombre, apellido, rol) VALUES ('nombre5@mail.com', 'nombre5', 'apellido5', 'administrador');
+==============================
+
+CREATE TABLE posts (
+id SERIAL,
+titulo VARCHAR,
+contenido TEXT,
+fecha_creacion TIMESTAMP,
+fecha_actualizacion TIMESTAMP,
+destacado BOOLEAN,
+usuarios_id BIGINT
+);
+
+INSERT INTO posts (titulo, contenido, fecha_creacion,fecha_actualizacion,destacado,usuarios_id )
+VALUES ('titulo_1', 'estás trabajando con Windows y al ejecutar el comando psql te sale la advertencia sobre diferencias entre los sistemas de codificación', '2023-06-22 19:10:25-07', '2023-06-22 19:15:25-07', true, 1);
+
+INSERT INTO posts (titulo, contenido, fecha_creacion,fecha_actualizacion,destacado,usuarios_id )
+VALUES ('titulo_2', 'estás trabajando con Windows y al ejecutar sistemas de codificación', '2023-06-23 19:20:25-07', '2023-06-23 21:15:25-07', false, 1);
+
+INSERT INTO posts (titulo, contenido, fecha_creacion,fecha_actualizacion,destacado,usuarios_id )
+VALUES ('titulo_3', 'estás trabajando con Windows y al ejecutar sistemas de codificación', '2023-06-23 19:21:25-07', '2023-06-23 21:16:25-07', true, 2);
+
+INSERT INTO posts (titulo, contenido, fecha_creacion,fecha_actualizacion,destacado,usuarios_id )
+VALUES ('titulo_4', 'estás trabajando con Windows y al ejecutar sistemas de codificación', '2023-06-23 19:22:25-07', '2023-06-23 21:16:25-07', false, 3);
+
+INSERT INTO posts (titulo, contenido, fecha_creacion,fecha_actualizacion,destacado,usuarios_id )
+VALUES ('titulo_5', 'estás trabajando con Windows y al ejecutar sistemas de codificación', '2023-06-23 19:22:25-07', '2023-06-23 21:16:25-07', false, null);
+
+================================================
+
+CREATE TABLE comentarios (
+id SERIAL,
+contenido TEXT,
+fecha_creacion TIMESTAMP,
+usuario_id BIGINT,
+post_id BIGINT
+);
+
+INSERT INTO comentarios (contenido, fecha_creacion, usuario_id, post_id)
+VALUES ('estás trabajando con Windows comentario 1', '2023-06-23 23:22:25-07', 1,1);
+
+INSERT INTO comentarios (contenido, fecha_creacion, usuario_id, post_id)
+VALUES ('estás trabajando con Windows comentario 2', '2023-06-23 23:22:25-07', 2,1);
+
+INSERT INTO comentarios (contenido, fecha_creacion, usuario_id, post_id)
+VALUES ('estás trabajando con Windows comentario 3', '2023-06-23 23:22:25-07', 3,1);
+
+INSERT INTO comentarios (contenido, fecha_creacion, usuario_id, post_id)
+VALUES ('estás trabajando con Windows comentario 4', '2023-06-23 23:22:25-07', 1,2);
+
+INSERT INTO comentarios (contenido, fecha_creacion, usuario_id, post_id)
+VALUES ('estás trabajando con Windows comentario 5', '2023-06-23 23:22:25-07', 2,2);
+
+preguntas:
+
+-- pregunta 2.-
+SELECT nombre,email,titulo,contenido FROM usuarios
+INNER JOIN posts ON usuarios.id = posts.usuario_id;
+
+-- pregunta 3.- 
+SELECT usuarios.id,titulo,contenido FROM usuarios
+INNER JOIN posts ON usuarios.id = posts.usuario_id
+WHERE rol='administrador';
+
+-- pregunta 4.- 
+SELECT id,email, cantidad_post FROM usuarios
+INNER JOIN (SELECT usuario_id, COUNT(*) AS cantidad_post FROM posts GROUP BY usuario_id ORDER BY cantidad_post)
+AS posts ON usuarios.id=posts.usuario_id;
+
+-- pregunta 5.- 
+SELECT id,email, COALESCE(count, 0) AS cantidad_post FROM usuarios
+LEFT JOIN (SELECT usuario_id, COUNT(contenido) FROM posts GROUP BY usuario_id ORDER BY count)
+AS posts ON usuarios.id=posts.usuario_id;
+
+-- pregunta 6.- 
+SELECT usuarios.id, MAX(posts.fecha_creacion) FROM usuarios
+INNER JOIN posts
+ON usuarios.id=posts.usuario_id GROUP BY usuarios.id ORDER BY usuarios.id;
+
+-- pregunta 7.- 
+SELECT titulo, posts.contenido, cant_coment FROM posts
+INNER JOIN (SELECT post_id, COUNT(post_id) AS cant_coment FROM comentarios GROUP BY post_id ORDER BY cant_coment DESC LIMIT 1) comentarios
+ON posts.id=comentarios.post_id;
+
+-- pregunta 8.- 
+SELECT titulo, posts.contenido AS contenido_post, comentarios.contenido AS comentario, email FROM posts
+inner JOIN comentarios
+ON posts.id=comentarios.post_id
+inner JOIN usuarios
+ON usuarios.id=comentarios.usuario_id
+ORDER BY titulo
+
+-- pregunta 9.- 
+SELECT contenido AS comentario, MAX(fecha_creacion) AS last_date, email FROM comentarios
+INNER JOIN usuarios
+ON usuarios.id=comentarios.usuario_id
+GROUP BY contenido, email;
+
+-- pregunta  10.- 
+SELECT email FROM comentarios
+RIGHT JOIN usuarios
+ON usuarios.id=comentarios.usuario_id
+GROUP BY email
+HAVING MAX(comentarios.contenido) IS NULL;
+
+
+================================================================================================================
+================================================================================================================
+
+create database desafio_prueba2_Alberto_Guerrero_806;
+
+CREATE TABLE peliculas (
+id int primary key,
+nombre varchar,
+anno int
+);
+
+CREATE TABLE tags (
+id int primary key,
+tag varchar (32)
+);
+
+CREATE TABLE PeliculaTag (
+id int,
+"pelicula_id" Integer,
+"tag_id" Integer,
+FOREIGN KEY ("pelicula_id")
+REFERENCES peliculas ("id"),
+FOREIGN KEY ("tag_id")
+REFERENCES tags ("id")
+);
+
+INSERT INTO peliculas (id,nombre,anno) VALUES ( 1,'pelicula_1', 2019 );
+INSERT INTO peliculas (id,nombre,anno) VALUES ( 2,'pelicula_2', 2020 );
+INSERT INTO peliculas (id,nombre,anno) VALUES ( 3,'pelicula_3', 2021 );
+INSERT INTO peliculas (id,nombre,anno) VALUES ( 4,'pelicula_4', 2022 );
+INSERT INTO peliculas (id,nombre,anno) VALUES ( 5,'pelicula_5', 2023 );
+
+INSERT INTO tags (id,tag) VALUES ( 1,100);
+INSERT INTO tags (id,tag) VALUES ( 2,200);
+INSERT INTO tags (id,tag) VALUES ( 3,300);
+INSERT INTO tags (id,tag) VALUES ( 4,400);
+INSERT INTO tags (id,tag) VALUES ( 5,500);
+
+INSERT INTO PeliculaTag (id,pelicula_id,tag_id) VALUES (1,1,1);
+INSERT INTO PeliculaTag (id,pelicula_id,tag_id) VALUES (2,1,1);
+INSERT INTO PeliculaTag (id,pelicula_id,tag_id) VALUES (3,1,1);
+INSERT INTO PeliculaTag (id,pelicula_id,tag_id) VALUES (4,2,2);
+INSERT INTO PeliculaTag (id,pelicula_id,tag_id) VALUES (5,2,2);
+
+SELECT peliculas.id, nombre AS peli, COUNT(tag_id) AS cant_tags_x_peli
+FROM peliculas
+LEFT OUTER JOIN PeliculaTag ON peliculas.id=pelicula_id
+GROUP BY peliculas.id, nombre
+ORDER BY peliculas.id ASC;
+
+4.-
+CREATE TABLE Preguntas (
+id int primary key,
+pregunta varchar(255),
+respuesta_correcta varchar
+);
+
+CREATE TABLE Usuarios (
+id int primary key,
+nombre varchar(255),
+edad int
+);
+
+CREATE TABLE Respuestas (
+id int PRIMARY KEY,
+respuesta varchar(255),
+usuario_id int,
+pregunta_id int,
+FOREIGN KEY ("usuario_id")
+REFERENCES Usuarios ("id"),
+FOREIGN KEY ("pregunta_id")
+REFERENCES Preguntas ("id")
+);
+
+5.- 
+INSERT INTO Preguntas (id,pregunta,respuesta_correcta) VALUES (1,'pregunta_1','respuesta correcta pregunta 1');
+INSERT INTO Preguntas (id,pregunta,respuesta_correcta) VALUES (2,'pregunta_2','respuesta correcta pregunta 2');
+INSERT INTO Preguntas (id,pregunta,respuesta_correcta) VALUES (3,'pregunta_3','respuesta correcta pregunta 3');
+INSERT INTO Preguntas (id,pregunta,respuesta_correcta) VALUES (4,'pregunta_4','respuesta correcta pregunta 4');
+INSERT INTO Preguntas (id,pregunta,respuesta_correcta) VALUES (5,'pregunta_5','respuesta correcta pregunta 5');
+
+INSERT INTO Usuarios (id,nombre,edad) VALUES (1,'Alberto','35');
+INSERT INTO Usuarios (id,nombre,edad) VALUES (2,'Roberto','36');
+INSERT INTO Usuarios (id,nombre,edad) VALUES (3,'Ruperto','37');
+INSERT INTO Usuarios (id,nombre,edad) VALUES (4,'Gilberto','38');
+INSERT INTO Usuarios (id,nombre,edad) VALUES (5,'Mamerto','39');
+
+INSERT INTO respuestas (id,respuesta,usuario_id,pregunta_id) VALUES (1,'respuesta correcta pregunta 1',1,1);
+INSERT INTO respuestas (id,respuesta,usuario_id,pregunta_id) VALUES (2,'respuesta correcta pregunta 1',2,1);
+INSERT INTO respuestas (id,respuesta,usuario_id,pregunta_id) VALUES (3,'respuesta correcta pregunta 2',3,2);
+INSERT INTO respuestas (id,respuesta,usuario_id,pregunta_id) VALUES (4,'respuesta INcorrecta pregunta 3',4,3);
+INSERT INTO respuestas (id,respuesta,usuario_id,pregunta_id) VALUES (5,'respuesta INcorrecta pregunta 4',5,4);
+
+6.-
+SELECT usuarios.id AS IDusuarios, COUNT(preguntas.id) AS cant_resp_ok
+FROM respuestas
+LEFT JOIN preguntas 
+ON respuestas.respuesta=preguntas.respuesta_correcta
+LEFT JOIN usuarios
+ON usuarios.id=respuestas.usuario_id
+GROUP BY usuarios.id
+ORDER BY usuarios.id ASC;
+
+7.-
+SELECT preguntas.id, pregunta, count(respuesta) AS resp_ok_x_user
+FROM preguntas
+left JOIN respuestas
+ON preguntas.respuesta_correcta=respuestas.respuesta
+GROUP BY preguntas.id
+ORDER BY preguntas.id ASC;
+
+8.-
+ALTER TABLE respuestas DROP CONSTRAINT respuestas_usuario_id_fkey, ADD FOREIGN KEY
+(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE;
+
+DELETE FROM usuarios WHERE id = 1
+
+INSERT INTO Usuarios (id,nombre,edad) VALUES (1,'Alberto','35');
+
+9.-
+ALTER TABLE IF EXISTS public."usuarios"
+ADD CONSTRAINT validar_edad CHECK (edad >= 18);
+
+INSERT INTO Usuarios (id,nombre,edad) VALUES (6,'Nolberto','17');
+INSERT INTO Usuarios (id,nombre,edad) VALUES (6,'Nolberto','18');
+
+10.-
+ALTER TABLE usuarios ADD COLUMN email varchar(255)
+
+ALTER TABLE IF EXISTS public."usuarios"
+ADD CONSTRAINT validar_email UNIQUE (email);
+
+UPDATE usuarios SET email='correo1@mail.com' WHERE id=1;
+UPDATE usuarios SET email='correo2@mail.com' WHERE id=2;
+UPDATE usuarios SET email='correo3@mail.com' WHERE id=3;
+UPDATE usuarios SET email='correo4@mail.com' WHERE id=4;
+UPDATE usuarios SET email='correo5@mail.com' WHERE id=5;
+UPDATE usuarios SET email='correo5@mail.com' WHERE id=6;
+
+
+============================================================================================
+Tabla proyecto final
+
+CREATE TABLE users(
+    id SERIAL primary key,
+	grading VARCHAR(50) DEFAULT 'user',
+	name VARCHAR(30),
+	lastname VARCHAR(30),
+	email VARCHAR(50),
+	password VARCHAR(150),
+	phone VARCHAR(15),
+	address VARCHAR(255),
+	city VARCHAR(15),
+	enterprise VARCHAR(100),
+	role INT,
+	status BOOLEAN
+)
+
+INSERT INTO users (grading,name,lastname,email,
+	password,
+	phone,
+	address,
+	city,
+	enterprise,
+	role,
+	status) VALUES (
+	'user',
+	'Jose',
+	'chamorro',
+	'chamorro@mail.com',
+	'plop',
+	'12345678',
+	'casa 505',
+	'santiago',
+	'el mejor',
+	1,
+	'true')
+
+{
+    "id": 1,
+    "grading": "user",
+    "name": "Jose",
+    "lastname": "chamorro",
+    "email": "chamorro@mail.com",
+    "password": "plop",
+    "phone": "12345678",
+    "address": "casa 505",
+    "city": "santiago",
+    "enterprise": "el mejor",
+    "role": 1,
+    "status": true
+  }
+==============================================================================================
+
+UPDATE bookings SET status='false' WHERE id=1;
+
+CREATE TABLE bookings(
+    id SERIAL primary key,
+	user_id INT,
+	pool_id INT,
+	car_id INT,
+	date DATE,
+	quantity INT,
+	amount INT,
+	payment VARCHAR(20),
+	comment TEXT,
+	status BOOLEAN
+)
+===============================================================================================
+INSERT INTO bookings (
+	user_id,
+	pool_id,
+	car_id,
+	date,
+	quantity,
+	amount,
+	payment,
+	comment,
+	status)
+	VALUES
+	(
+	1,1,1,'05-05-2024',500000,600000,'comentario 1', true )
+
+	{
+        "user_id": "1",
+        "pool_id": "1",
+        "car_id": "1",
+        "date": "05-05-2024",
+        "quantity": "10",
+        "amount": "500000",
+        "payment": "600000",
+        "comment": "comentario",
+        "status": "true"
+    }
+
+=============================================================================================
+CREATE TABLE cars(
+    id SERIAL primary key,
+	brand VARCHAR(30),
+	model VARCHAR(30),
+	car_id INT,
+	year DATE,
+	version VARCHAR(15),
+	type VARCHAR(15),
+	transmission VARCHAR(15),
+	fuel VARCHAR(15),
+	engine VARCHAR(15),
+	transmition VARCHAR(15),
+	capacity VARCHAR(15),
+	seatings VARCHAR(15),
+	range VARCHAR(15),
+	id_info INT
+)
+
+{
+        "brand": "Toyota",
+        "model": "Navara",
+        "year": "2024-01-01T03:00:00.000Z",
+        "version": "4x4",
+        "type": "camioneta",
+        "transmission": "asistida",
+        "fuel": "Diesel",
+        "engine": "2200cc",
+        "transmition": "4x4",
+        "capacity": "1300Kgs",
+        "seatings": "5",
+        "range": "range",
+        "id_info": null
+    }
+	{
+        "brand": "Subaru",
+        "model": "outback",
+        "year": "2024-01-01",
+        "version": "4x2",
+        "type": "station",
+        "transmission": "asistida",
+        "fuel": "Diesel",
+        "engine": "1800cc",
+        "transmition": "4x2",
+        "capacity": "800Kgs",
+        "seatings": "5",
+        "range": "range",
+        "id_info": 10
+    }
+
+=============================================================================================
+CREATE TABLE pools(
+    id SERIAL primary key,
+	car_id INT,
+	quantity INT,
+	goal_quantity INT,
+	initial_price INT,
+	goal_price INT,
+	status BOOLEAN
+)
+
+{
+    "car_id": 1,
+	"quantity": 10,
+	"goal_quantity": 8000000,
+	"initial_price": 9000000,
+	"goal_price": 7000000,
+	"status": true
+    }
+
+{
+    "car_id": 2,
+	"quantity": 10,
+	"goal_quantity": 9000000,
+	"initial_price": 10000000,
+	"goal_price": 8000000,
+	"status": true
+    }
+
+==============================================================================================
+
+CREATE TABLE info_cars(
+    id SERIAL primary key,
+	car_id INT,
+	image VARCHAR(255),
+	color VARCHAR(255)
+)
+
+INSERT INTO info_cars(car_id, image, color VALUES ( 1, "frontal.jpg", "Rojo" )
+
+	{
+        "user_id": "1",
+        "pool_id": "1",
+        "car_id": "1",
+        "date": "05-05-2024",
+        "quantity": "10",
+        "amount": "500000",
+        "payment": "600000",
+        "comment": "comentario",
+        "status": "true"
+    }
+
+SELECT bookings.id, date, bookings.quantity, amount, payment, comment, bookings.status, name, 
+lastname, email, pools.quantity, goal_quantity, initial_price  FROM bookings
+INNER JOIN users ON bookings.id=users.id
+INNER JOIN pools ON bookings.pool_id=pools.id
+WHERE bookings.id = 1
+
+========================================================================================000
+
+CREATE TABLE users(
+    id SERIAL primary key,
+	nombre VARCHAR(100),
+	apellido VARCHAR(100),
+	email VARCHAR(100),
+	password VARCHAR (50),
+	activo BOOLEAN
+)
+
+INSERT INTO users values (DEFAULT, 'Jose', 'Fuentes', 'jfuentes@incotel.cl', '12345678', true)
+UPDATE users SET password='$2a$10$KjBJ3W1TagJ62QywGgPAae/xZ5o2/rU01BGpGf499xSga2IuS/SDu' WHERE id=1;
+
+{
+    "nombre": "luis",
+	"apellido": "chamorro",
+    "email": "chamorro@mail.com",
+    "password": "plop",
+    "activo": true,
+}
+
+CREATE TABLE abonos(
+    id SERIAL primary key,
+	proyecto VARCHAR(100),
+	trabajador VARCHAR(100),
+	descripcion VARCHAR(255),
+	monto int(10),
+	fecha_in date,
+	fecha_out date,
+	activo BOOLEAN
+	user_id,
+	rendicion_id
+)
+
+proyecto VARCHAR(100),
+	trabajador,descripcion,monto,fecha_in,fecha_out,activo, user_id, rendicion_id
+
+CREATE TABLE rendiciones(
+    id SERIAL primary key,
+	monto VARCHAR(100),
+	tipo_gasto VARCHAR(100),
+	tipo_doc VARCHAR(255),
+	number_doc INT,
+	fecha_in date,
+	activo BOOLEAN,
+	user_id
+)
+
+{
+    "proyecto": "instalacion LTE",
+    "descripcion": "3,5 días x $55.000 = $192.500 ",
+    "monto": 150000,
+    "fecha_in": "2024-02-04",
+    "fecha_out": "2024-02-05",
+    "activo": true,
+    "rendicion_id": 2,
+    "user_id": 2
+}
+
+{
+	"monto": 15000,
+    "tipo_gasto": "transporte",
+    "tipo_doc": "factura",
+    "number_doc": 123456,
+    "descripcion": "visita en camioneta",
+    "activo": true,
+	"abono_id": 2
+}
+
+{
+	"monto": 15000,
+    "tipo_gasto": "transporte",
+    "tipo_doc": "factura",
+    "number_doc": 123456,
+    "fecha_in": "09-05-2024",
+    "activo": true,
+	"abono_id": 2,
+	"detalle": "visita en camioneta",
+	"user_id": 3
+}
+
+///////// seccion users /////////////////////////////////
+const { loginUser, addUser, listUsers, findUser, checkRouteLogin, checkToken } = require('../controller/usersController')
+router.post("/login", checkRouteLogin, loginUser)
+router.post("/users", checkToken, addUser)
+//router.get("/usuarios/:id", checkToken,findUser )
+router.get("/user/:id", checkToken,findUser )
+router.get("/lista", checkToken, listUsers )
+
+/////////  seccion abonos //////////////////////////////
+const { addAbono, allAbonos, closeAbono} = require('../controller/abonosController')
+//router.post("/abono", checkToken, addAbono)
+router.post("/abono", addAbono)
+router.post("/abono/closed/:id", closeAbono)
+router.get("/abonos/", checkToken,allAbonos )
+
+////////  seccion rendiciones  ////////////////////////
+const { addRendicion, allRendiciones, findRendicion} = require('../controller/rendicionController')
+router.post("/rendicion", addRendicion )
+router.get("/rendiciones", allRendiciones )
+router.get("/rendicion/:id", findRendicion )
+//////////////////////////////////////////////////////
+
+
+const autenticado = user.filter((el) => el.email == email && el.password == password)
+  if (autenticado == ''){  setAlert("danger")
+                            setMessage("Error: email o Password incorrectos !!!") }
+     else{ 
+      navigate(`/home`); }
+	  
+	  
+const response = await fetch(ENDPOINT.login, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(userlogin),
+  })
+  const result = await response.json();
+  localStorage.setItem("token", result)
+  
+  return abono_id:abono.id, monto:abono.monto, user_id: abono.user_id 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+   fetch( ENDPOINT.delrendicion + id ,  {
+      method: 'DELETE',
+      }).then(response => {
+        if(!response.ok){
+          setActiveMsg[true]
+          setAlert("danger")
+          setMessage("Error: No fué posible ingresar el abono")
+        }
+        else{
+          setActiveMsg[true]
+          setAlert("success")
+          setMessage("Item eliminado con exito")}
+        })
+      .catch((err) => {console.log(err)})
+	  
+
+ fetch( ENDPOINT.delrendicion + id ,  {
+      method: 'DELETE',
+      }).then(response => {
+        if(!response.ok){
+          setActiveMsg(true)
+          setAlert("danger")
+          setMessage("Error: No fué posible ingresar el abono")
+        }
+        else{
+          setActiveMsg(true)
+          setAlert("success")
+          setMessage("Item eliminado con exito")}
+        })
+      .catch((err) => {console.log(err)})
