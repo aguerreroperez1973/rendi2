@@ -2,6 +2,7 @@ const { pool } = require('../database/connection.js')
 const bcrypt = require('bcryptjs')
 
 const registerAbono = async (abono) => {
+    console.log("paso x regis abono")
     console.log(abono)
     let { proyecto, descripcion, monto, fecha_in, fecha_out, activo, user_id } = abono
     const values = [ proyecto, descripcion, monto, fecha_in, fecha_out, activo, user_id ]

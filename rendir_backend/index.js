@@ -3,7 +3,7 @@ const app = express()
 const cors = require('cors')
 const Rutas = require("./routes/Routes")
 
-app.listen(3000, console.log("SERVER ON"))
+app.listen(3000, console.log("SERVER ON  running on port 3000"))
 app.use(cors())
 app.use(express.json())
 

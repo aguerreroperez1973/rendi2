@@ -8,7 +8,7 @@ const loginUser = async (req, res) => {
         await checkUser(email, password)
         const token = jwt.sign({ email }, "az_AZ", {expiresIn: 1200})
         console.log(token)
-        res.send({token} )
+        res.send({ email: email, token:token } )
         } catch (error) {
         console.log(error)
         res.status(error.code || 500).send(error)
@@ -27,10 +27,10 @@ const addUser = async (req, res) => {
 
 const listUsers = async (req, res) => {
         try {
-            const Authorization = req.header("Authorization")
+            /*const Authorization = req.header("Authorization")
             const token = Authorization.split("Bearer ")[1]
             jwt.verify(token, "az_AZ")
-            const { email } = jwt.decode(token)
+            const { email } = jwt.decode(token)*/
             const users = await getUsers()
             res.json(users)
         } catch (error) {
@@ -61,7 +61,7 @@ const checkRouteLogin = async (req, res, next) => {
     }
 
 const checkToken = async (req, res, next) => {
-        console.log("paso checktoken")
+        console.log("paso x checktoken")
         const Authorization = req.header("Authorization")
         if(Authorization === '' || Authorization === undefined )
         { res.status(401).json({ message: "Error: Token Null" }); console.log("Error: Token Null")}
