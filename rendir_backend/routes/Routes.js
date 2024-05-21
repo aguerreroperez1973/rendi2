@@ -4,7 +4,7 @@ const router = express.Router();
 ///////// seccion users /////////////////////////////////
 const { loginUser, addUser, listUsers, findUser, checkRouteLogin, checkToken } = require('../controller/usersController')
 router.post("/login",checkRouteLogin ,loginUser)
-router.post("/users",checkToken, addUser)
+router.post("/users", addUser)
 router.get("/user/:id",checkToken, findUser )
 router.get("/lista", listUsers )
 
